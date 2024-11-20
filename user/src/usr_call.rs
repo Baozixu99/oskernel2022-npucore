@@ -78,3 +78,6 @@ pub fn linkat(olddirfd: usize, oldpath: &str, newdirfd: usize, newpath: &str) ->
 pub fn unlinkat(dirfd: usize, path: &str, flags: crate::UnlinkatFlags) -> isize {
     sys_unlinkat(dirfd, path, flags.bits)
 }
+pub fn getdents64(fd: usize, buf: &mut [u8]) -> isize {
+    sys_getdents64(fd, buf)
+}

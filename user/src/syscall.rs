@@ -183,3 +183,6 @@ pub fn sys_linkat(olddirfd: usize, oldpath: &str, newdirfd: usize, newpath: &str
 pub fn sys_unlinkat(dirfd: usize, path: &str, flags: u32) -> isize {
     syscall(SYSCALL_UNLINKAT, [dirfd, path.as_ptr() as usize, flags as usize,0])
 }
+pub fn sys_getdents64(fd: usize, buf: &mut [u8]) -> isize {
+    syscall(SYSCALL_GETDENTS64, [fd, buf.as_mut_ptr() as usize, buf.len(),0])
+}

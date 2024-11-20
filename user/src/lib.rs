@@ -91,6 +91,7 @@ bitflags! {
         const RDWR   = 0o2;
         const CREATE = 0o100;  //0b1 000 000 == 1<<6
         const TRUNC  = 0o1000; 
+        const DIRECTORY   = 0o200000; // 要求路径必须是一个目录
     }
 }
 #[repr(C)]
@@ -179,4 +180,21 @@ bitflags! {
     pub struct UnlinkatFlags: u32 {
         const AT_REMOVEDIR = 0x200;
     }
+}
+
+const NAME_LIMIT: usize = 128;
+#[repr(C)]  
+pub struct Dirent {
+    /// Inode number
+    pub d_ino: usize,
+    /// Offset to next `linux_dirent`
+    pub d_off: isize,
+    /// Length of this `linux_dirent`
+    pub d_reclen: u16,
+    /// Type of the file
+    pub d_type: u8,
+    /// The Filename (null-terminated)
+    /// # Note
+    /// We use fix-sized d_name array.
+    pub d_name: [u8; NAME_LIMIT],
 }
